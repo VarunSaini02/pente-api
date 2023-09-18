@@ -34,7 +34,7 @@ class PenteBoard:
         """
         Sets the square at (row, col).
         """
-        return self.board[(row * 19) + col]
+        self.board[(row * 19) + col] = player
 
     def update_board(self, prev_row, prev_col, prev_player):
         """
@@ -97,6 +97,10 @@ class PenteBoard:
         Checks if prev_player won on their most recent move.
         If so, sets self.game.winner to prev_player.
         """
+        if self.captured[prev_player] >= 10:
+            self.game.winner = prev_player
+            return
+
         furthest_endpoints = self.get_endpoints_at_radius(prev_row, prev_col, 4)
 
         for endpoint in furthest_endpoints:
