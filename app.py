@@ -207,10 +207,13 @@ def execute_next_move(gameID, row, col):
 
     if not (0 <= int(gameID) < len(games)):
         return "Invalid gameID"
-    if not (0 <= int(row) < 19 and 0 <= int(col) < 19):
-        return "Invalid row/col pair"
 
     game = games[int(gameID)]
+
+    if not (0 <= int(row) < 19 and 0 <= int(col) < 19):
+        return "Invalid row/col pair"
+    if (int(row), int(col)) not in game.board.open_spots:
+        return "Space already occupied"
 
     if game.winner:
        return f"Game already finished, winner: {game.winner}"
