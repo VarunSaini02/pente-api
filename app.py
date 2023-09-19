@@ -179,7 +179,9 @@ def make_new_game(player):
     """
 
     if (player != "X" and player != "O"):
-        return "Player must be 'X' or 'O'"
+        return jsonify({
+            "error": "Player must be 'X' or 'O'"
+        })
 
     game_id = len(games)
     game = PenteGame(game_id, player)
@@ -187,7 +189,8 @@ def make_new_game(player):
 
     # If AI is X, start with a move
     if (player == "X"):
-        initial_row = randint(0, 18)
+        # Purely for testing purposes, prevent AI from starting in the first row
+        initial_row = randint(1, 18)
         initial_col = randint(0, 18)
         game.do_move(initial_row, initial_col, True)
 
@@ -207,17 +210,25 @@ def execute_next_move(gameID, row, col):
     """
 
     if not (0 <= int(gameID) < len(games)):
-        return "Invalid gameID"
+        return jsonify({
+            "error": "Invalid gameID"
+        })
 
     game = games[int(gameID)]
 
     if not (0 <= int(row) < 19 and 0 <= int(col) < 19):
-        return "Invalid row/col pair"
+        return jsonify({
+            "error": "Invalid row/col pair"
+        })
     if (int(row), int(col)) not in game.board.open_spots:
-        return "Space already occupied"
+        return jsonify({
+            "error": "Space already occupied"
+        })
 
     if game.winner:
-       return f"Game already finished, winner: {game.winner}"
+       return jsonify({
+        "error": f"Game already finished, winner: {game.winner}"
+    })
 
     game.do_move(int(row), int(col), False)
 
