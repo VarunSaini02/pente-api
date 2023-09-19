@@ -133,10 +133,8 @@ class PenteBoard:
 
 class PenteGame:
     """
-    Creates a new Pente game.
-    The player field specifies the player the AI is playing as.
-
-    Returns: a JSON object containing the game ID and game state.
+    Represents the Pente game itself. Contains convenient helper methods
+    for getting the game state, executing moves, and helping inform the AI's strategy.
     """
     def __init__(self, game_id, ai_player):
         self.ai_player = ai_player
@@ -226,9 +224,9 @@ def execute_next_move(gameID, row, col):
         })
 
     if game.winner:
-       return jsonify({
-        "error": f"Game already finished, winner: {game.winner}"
-    })
+        return jsonify({
+            "error": f"Game already finished, winner: {game.winner}"
+        })
 
     game.do_move(int(row), int(col), False)
 
