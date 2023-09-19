@@ -167,6 +167,7 @@ class PenteGame:
         player = self.ai_player if is_ai_player_turn else self.non_ai_player
         self.board.set_row_col(row, col, player)
         self.board.update_board(row, col, player)
+        self.next_player = self.non_ai_player if is_ai_player_turn else self.ai_player
 
 @app.route("/newgame/<player>")
 def make_new_game(player):
